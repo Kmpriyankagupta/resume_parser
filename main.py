@@ -187,8 +187,8 @@ def extract_education(input_text):
 
 
 if __name__ == "__main__":
-    text = extract_text_from_pdf(r"C:\Users\gupta\Downloads\Kamal's-Resume (1).pdf")
-    # text = extract_text_from_docx(file_pah)
+    text = extract_text_from_pdf(file_path)
+    text = extract_text_from_docx(file_pah)
     names = extract_names(text)
     phone_number = extract_phone_number(text)
     emails = extract_emails(text)
