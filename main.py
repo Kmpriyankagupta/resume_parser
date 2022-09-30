@@ -5,7 +5,7 @@ import subprocess
 from pdfminer.high_level import extract_text
 from PyPDF2 import PdfFileReader, PdfFileWriter, PdfFileMerger
 
-import requests
+
 
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
@@ -13,6 +13,7 @@ nltk.download('maxnet_ne_chunker')
 nltk.download('words')
 nltk.download('stopwords')
 
+# Extracting text from the pdf
 def extract_text_from_pdf(pdf_path):
     pdfFileObj = open(pdf_path, 'rb')
 
@@ -38,12 +39,13 @@ def extract_text_from_pdf(pdf_path):
     # return (text)
 
     return extract_text(pdf_path)
-
+# Extracting text from the docx
 def extract_text_from_docx(docx_path):
     txt = docx2txt.process(docx_path)
     if txt:
         return txt.replace('\t', ' ')
     return None
+
 
 # Extracting the names from the pdf
 def extract_names(txt):
@@ -60,8 +62,6 @@ def extract_names(txt):
 
 # Extracting the Phone number from the pdf
 PHONE_REG = re.compile(r'[\+\(]?[1-9][0-9 .\-\(\)]{8,}[0-9]')
-
-
 def doc_to_text_catdoc(file_path):
     try:
         process = subprocess.Popen(  # noqa: S607,S603
@@ -92,12 +92,13 @@ def extract_phone_number(resume_text):
 
             return number
     return None
+
+
 # Extracts email address
 EMAIL_REG = re.compile(r'[a-z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+')
-
-
 def extract_emails(resume_text):
     return re.findall(EMAIL_REG, resume_text)
+
 
 # Extracting Skills
 SKILLS_DB = [
@@ -115,8 +116,6 @@ SKILLS_DB = [
     'English',
 
 ]
-
-
 def extract_skills(input_text):
     stop_words = set(nltk.corpus.stopwords.words('english'))
     word_tokens = nltk.tokenize.word_tokenize(input_text)
@@ -144,8 +143,8 @@ def extract_skills(input_text):
             found_skills.add(ngram)
 
     return found_skills
-# Extracts education
 
+# Extracts education
 RESERVED_WORDS = [
     'school',
     'college',
@@ -164,8 +163,6 @@ RESERVED_WORDS = [
     'ünivers',
     'okul',
 ]
-
-
 def extract_education(input_text):
     organizations = []
 
